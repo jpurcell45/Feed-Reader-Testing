@@ -79,6 +79,7 @@ $(function() {
           });
   });
     /* TODO: Write a new test suite named "Initial Entries" */
+    describe('Initial Entries', function () {
 
         /* TODO: Write a test that ensures when the loadFeed
          * function is called and completes its work, there is at least
@@ -86,11 +87,39 @@ $(function() {
          * Remember, loadFeed() is asynchronous so this test will require
          * the use of Jasmine's beforeEach and asynchronous done() function.
          */
+         var loadData;
+         beforeEach(function(done) {
+           loadData.loadFeed(function() {
+             done();
+           });
+         });
+         it('after loadFeed runs ensure at least one entry element in feed container', function(done) {
+           expect(feed.entry).not.toBe("");
+           done();
+         });
 
+
+  });
     /* TODO: Write a new test suite named "New Feed Selection" */
-
+    describe('New Feed Selection', function() {
+        var oldData;
+        var newData;
         /* TODO: Write a test that ensures when a new feed is loaded
          * by the loadFeed function that the content actually changes.
          * Remember, loadFeed() is asynchronous.
          */
+         beforeEach(function(done) {
+           loadFeed(0, function() {
+             oldData = $('.feed').html();
+           });
+           loadFeed(1, function() {
+             newData = $('.feed').html();
+             done();
+           });
+         });
+         //End of beforeEach
+         it('new feed actually has new content', function() {
+           expect(newData).not.toBe(oldData);
+         });
+         });
 }());
