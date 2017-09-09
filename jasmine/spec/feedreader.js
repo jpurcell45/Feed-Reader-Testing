@@ -42,7 +42,7 @@ $(function() {
          it('feed name is defined and not empty', function() {
             allFeeds.forEach(function (feed) {
               expect(feed.name).toBeDefined();
-              expect(feed.name.length).not.toBe("");
+              expect(feed.name.length).not.toBe(0);
             });
          });
        });
@@ -59,7 +59,8 @@ $(function() {
          /* Write a test that ensures the menu changes
           * visibility when the menu icon is clicked. This test
           * should have two expectations: does the menu display when
-          * clicked and does it hide when clicked again.
+          * clicked and does it hide when clicked again. Click the
+          * menu icon once and verify that the menu displays.
           */
           it('ensure menu shows and hides on click', function() {
             $('.menu-icon-link').click();
@@ -100,15 +101,12 @@ $(function() {
          beforeEach(function(done) {
            loadFeed(0, function() {
              oldData = $('.feed').html();
-             done();
+             loadFeed(1, function() {
+               newData = $('.feed').html();
+               done();
+             });
            });
         });
-           beforeEach(function(done) {
-           loadFeed(1, function() {
-             newData = $('.feed').html();
-             done();
-           });
-         });
          //End of beforeEach
          it('new feed actually has new content', function() {
            expect(newData).not.toBe(oldData);
